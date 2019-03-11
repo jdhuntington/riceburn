@@ -1,12 +1,13 @@
 {
-        "version": "0.2.0",
-        "configurations": [
-            {
-                "type": "node",
-                "request": "launch",
-                "name": "Launch Program",
-                "program": "${workspaceRoot}/lib/mod.js",
-                "sourceMaps": true
-            }
-        ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${workspaceRoot}/lib/__tests__/mymod.js",
+      "cwd": "${workspaceFolder}/lib/__tests__/",
+      "sourceMaps": true
     }
+  ]
+}
