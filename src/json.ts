@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import fs from 'fs';
 
 export async function jsonHandler<T = any>(matches: string[], cb: (json: any) => any, spaceIndents: number = 2) {
   let json: T;

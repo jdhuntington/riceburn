@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import fs from 'fs';
 
 export async function textHandler<T = any>(matches: string[], cb: (text: string) => any) {
   let outputString: string;

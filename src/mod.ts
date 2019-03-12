@@ -1,8 +1,8 @@
-import * as glob from 'glob';
+import glob from 'glob';
 import { jsonHandler } from './json';
 import { textHandler } from './text';
-import { tsHandler, Visitor } from './typescript';
-import { ModHandlers } from './interfaces';
+import { tsHandler } from './typescript';
+import { ModHandlers, Visitor } from './interfaces';
 
 export default function mod(pattern: string) {
   const fileList = glob.sync(pattern);

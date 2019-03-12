@@ -12,5 +12,5 @@
     "esModuleInterop": true,
     "rootDir": "src"
   },
-  "include": ["src/mod.ts", "src/__tests__/**.ts"]
+  "include": ["src/mod.ts", "src/__tests__/**/*.spec.ts"]
 }
