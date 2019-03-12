@@ -1,9 +1,9 @@
 // Here's a comment
-var a = 5555;
+var a = 1;
 
-var b = 5555;
+var b = 2;
 
-var c = 5555;
+var c = 3;
 
 console.log(a);
 

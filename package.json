@@ -6,7 +6,9 @@
   "types": "./lib/mod.d.ts",
   "scripts": {
     "build": "tsc",
-    "start": "tsc -w --preserveWatchOutput"
+    "start": "tsc -w --preserveWatchOutput",
+    "start-test": "jest --watch",
+    "test": "jest"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`asTypescript replaces node with text 1`] = `
+"// Here's a comment
+var a = 'test';
+
+var b = 'test';
+
+var c = 'test';
+
+console.log(a);
+
+console.log(b);
+"
+`;
