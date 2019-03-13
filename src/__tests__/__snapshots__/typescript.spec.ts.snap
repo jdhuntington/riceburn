@@ -1,6 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`asTypescript replaces node with text 1`] = `
+exports[`tshandler appends node with text 1`] = `
+"// Here's a comment
+var a = 1
+console.log('appended');;
+
+var b = 2
+console.log('appended');;
+
+var c = 3
+console.log('appended');;
+"
+`;
+
+exports[`tshandler prepends node with text 1`] = `
+"// Here's a comment
+console.log('prepended');
+var a = 1;
+
+console.log('prepended');
+var b = 2;
+
+console.log('prepended');
+var c = 3;
+"
+`;
+
+exports[`tshandler removes node 1`] = `
+"// Here's a comment
+var a = 1;
+
+var b = 2;
+
+
+
+var c = 3;
+"
+`;
+
+exports[`tshandler removes node fully 1`] = `
+"// Here's a comment
+var a = 1;
+
+var b = 2;
+
+var c = 3;
+"
+`;
+
+exports[`tshandler replaces node with text 1`] = `
 "// Here's a comment
 var a = 'test';
 

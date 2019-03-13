@@ -5,7 +5,7 @@ import { tsHandler } from '../typescript';
 
 const FixturesPath = 'src/__tests__/fixtures';
 
-describe('asTypescript', () => {
+describe('tshandler', () => {
   const mockContents: { [pathName: string]: { [fileName: string]: string } } = {
     [FixturesPath]: {}
   };
@@ -26,12 +26,60 @@ describe('asTypescript', () => {
     mockfs(mockContents);
   });
 
-  it('replaces node with text', async () => {
+  it('replaces node with text', () => {
     const fixture = `${FixturesPath}/variableDeclaration.ts`;
 
-    await tsHandler([fixture], (node, modder) => {
+    tsHandler([fixture], (node, modder) => {
       if (ts.isVariableDeclaration(node)) {
         return modder.replace(node, `${node.name.getText()} = 'test'`);
+      }
+    });
+
+    matchSnapshot(fs.readFileSync(fixture).toString());
+  });
+
+  it('prepends node with text', () => {
+    const fixture = `${FixturesPath}/prepend.ts`;
+
+    tsHandler([fixture], (node, modder) => {
+      if (ts.isVariableDeclaration(node)) {
+        return modder.prepend(node.parent, `console.log('prepended');\n`);
+      }
+    });
+
+    matchSnapshot(fs.readFileSync(fixture).toString());
+  });
+
+  it('appends node with text', () => {
+    const fixture = `${FixturesPath}/append.ts`;
+
+    tsHandler([fixture], (node, modder) => {
+      if (ts.isVariableDeclaration(node)) {
+        return modder.append(node.parent, `\nconsole.log('appended');`);
+      }
+    });
+
+    matchSnapshot(fs.readFileSync(fixture).toString());
+  });
+
+  it('removes node', () => {
+    const fixture = `${FixturesPath}/remove.ts`;
+
+    tsHandler([fixture], (node, modder) => {
+      if (ts.isExpressionStatement(node)) {
+        return modder.remove(node);
+      }
+    });
+
+    matchSnapshot(fs.readFileSync(fixture).toString());
+  });
+
+  it('removes node fully', () => {
+    const fixture = `${FixturesPath}/removeFull.ts`;
+
+    tsHandler([fixture], (node, modder) => {
+      if (ts.isExpressionStatement(node)) {
+        return modder.removeFull(node);
       }
     });
 

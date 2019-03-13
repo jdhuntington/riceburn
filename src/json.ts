@@ -1,12 +1,12 @@
 import fs from 'fs';
 
-export async function jsonHandler<T = any>(matches: string[], cb: (json: any) => any, spaceIndents: number = 2) {
+export function jsonHandler<T = any>(matches: string[], cb: (json: any) => any, spaceIndents: number = 2) {
   let json: T;
   let newJson: T;
   let outputString: string;
   let inputString: string;
 
-  matches.forEach(async match => {
+  matches.forEach(match => {
     inputString = fs.readFileSync(match).toString();
 
     try {

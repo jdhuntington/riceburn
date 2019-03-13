@@ -57,12 +57,12 @@ export function _visitAndCollectMods(sourceFile: ts.SourceFile, visitor: Visitor
   return mods;
 }
 
-export async function tsHandler(matches: string[], visitor: Visitor) {
+export function tsHandler(matches: string[], visitor: Visitor) {
   let sourceFile: ts.SourceFile;
   let content: string;
   let newContent: string;
 
-  matches.forEach(async match => {
+  matches.forEach(match => {
     content = fs.readFileSync(match).toString();
 
     try {
