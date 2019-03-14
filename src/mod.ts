@@ -4,7 +4,7 @@ import { textHandler } from './text';
 import { tsHandler } from './typescript';
 import { ModHandlers, Visitor } from './interfaces';
 
-export default function mod(pattern: string) {
+export function mod(pattern: string) {
   const fileList = glob.sync(pattern);
 
   const handlers: ModHandlers<any> = {

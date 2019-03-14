@@ -29,20 +29,20 @@ export const modder: Modder = {
     };
   },
 
-  removeFull(node: ts.Node): TypescriptMod {
-    return {
-      node,
-      start: node.getFullStart(),
-      length: node.getFullText().length,
-      replacement: ''
-    };
-  },
-
   remove(node: ts.Node): TypescriptMod {
     return {
       node,
       start: node.getStart(),
       length: node.getText().length,
+      replacement: ''
+    };
+  },
+
+  removeFull(node: ts.Node): TypescriptMod {
+    return {
+      node,
+      start: node.getFullStart(),
+      length: node.getFullText().length,
       replacement: ''
     };
   }

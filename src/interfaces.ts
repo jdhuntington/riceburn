@@ -4,8 +4,8 @@ export interface Modder {
   replace(node: ts.Node, replacement: string): TypescriptMod;
   append(node: ts.Node, suffix: string): TypescriptMod;
   prepend(node: ts.Node, prefix: string): TypescriptMod;
-  removeFull(node: ts.Node): TypescriptMod;
   remove(node: ts.Node): TypescriptMod;
+  removeFull(node: ts.Node): TypescriptMod;
 }
 
 export interface Visitor {

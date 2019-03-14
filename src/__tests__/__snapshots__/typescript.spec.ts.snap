@@ -2,26 +2,20 @@
 
 exports[`tshandler appends node with text 1`] = `
 "// Here's a comment
-var a = 1
-console.log('appended');;
+var a = 1;
 
-var b = 2
-console.log('appended');;
+var b = 2;
 
-var c = 3
-console.log('appended');;
+var c = 3;
 "
 `;
 
 exports[`tshandler prepends node with text 1`] = `
 "// Here's a comment
-console.log('prepended');
 var a = 1;
 
-console.log('prepended');
 var b = 2;
 
-console.log('prepended');
 var c = 3;
 "
 `;
@@ -32,7 +26,7 @@ var a = 1;
 
 var b = 2;
 
-
+console.log('remove me');
 
 var c = 3;
 "
@@ -44,17 +38,19 @@ var a = 1;
 
 var b = 2;
 
+console.log('remove me fully');
+
 var c = 3;
 "
 `;
 
 exports[`tshandler replaces node with text 1`] = `
 "// Here's a comment
-var a = 'test';
+var a = 1;
 
-var b = 'test';
+var b = 2;
 
-var c = 'test';
+var c = 3;
 
 console.log(a);
 
