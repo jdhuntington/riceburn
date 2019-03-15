@@ -1,6 +1,6 @@
 {
   "name": "riceburn",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Mod that code!",
   "main": "./lib/mod.js",
   "types": "./lib/mod.d.ts",
