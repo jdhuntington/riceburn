@@ -2,6 +2,7 @@ import mockfs from 'mock-fs';
 import ts from 'typescript';
 import { loadFixtures } from './testutils/loadFixtures';
 import { testTsHandlerWithFixtureFactory } from './testutils/testTsHandlerWithFixtureFactory';
+import { TypescriptMod } from '../interfaces';
 
 const FixturesPath = 'src/__tests__/fixtures/typescript';
 
@@ -51,5 +52,33 @@ describe('tshandler', () => {
         return modder.removeFull(node);
       }
     });
+  });
+
+  it('mods multiple mods in a generator function', () => {
+    testWithFixture('iterable.ts', function*(node, modder) {
+      if (ts.isVariableDeclaration(node) && node.name.getText() === 'a') {
+        yield modder.replace(node.name, 'aaaa');
+      } else if (ts.isVariableDeclaration(node) && node.name.getText() === 'c') {
+        yield modder.replace(node.name, 'cccc');
+      }
+    });
+  });
+
+  it('mods multiple mods if results in array', () => {
+    testWithFixture('array.ts', (node, modder) => {
+      const mods: TypescriptMod[] = [];
+
+      if (ts.isVariableDeclaration(node) && node.name.getText() === 'a') {
+        mods.push(modder.replace(node.name, 'aaaa'));
+      } else if (ts.isVariableDeclaration(node) && node.name.getText() === 'c') {
+        mods.push(modder.replace(node.name, 'cccc'));
+      }
+
+      return mods;
+    });
+  });
+
+  it('does not mod when nothing is returned', () => {
+    testWithFixture('nomod.ts', (node, modder) => {});
   });
 });

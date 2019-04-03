@@ -2,37 +2,18 @@
 
 exports[`tshandler appends node with text 1`] = `
 "// Here's a comment
-var a = 1;
+var a = 1
+console.log('appended');;
 
-var b = 2;
+var b = 2
+console.log('appended');;
 
-var c = 3;
+var c = 3
+console.log('appended');;
 "
 `;
 
-exports[`tshandler prepends node with text 1`] = `
-"// Here's a comment
-var a = 1;
-
-var b = 2;
-
-var c = 3;
-"
-`;
-
-exports[`tshandler removes node 1`] = `
-"// Here's a comment
-var a = 1;
-
-var b = 2;
-
-console.log('remove me');
-
-var c = 3;
-"
-`;
-
-exports[`tshandler removes node fully 1`] = `
+exports[`tshandler does not mod when nothing is returned 1`] = `
 "// Here's a comment
 var a = 1;
 
@@ -44,13 +25,72 @@ var c = 3;
 "
 `;
 
-exports[`tshandler replaces node with text 1`] = `
+exports[`tshandler mods multiple mods if results in array 1`] = `
+"// Here's a comment
+var aaaa = 1;
+
+var b = 2;
+
+console.log('remove me fully');
+
+var cccc = 3;
+"
+`;
+
+exports[`tshandler mods multiple mods in a generator function 1`] = `
+"// Here's a comment
+var aaaa = 1;
+
+var b = 2;
+
+console.log('remove me fully');
+
+var cccc = 3;
+"
+`;
+
+exports[`tshandler prepends node with text 1`] = `
+"// Here's a comment
+console.log('prepended');
+var a = 1;
+
+console.log('prepended');
+var b = 2;
+
+console.log('prepended');
+var c = 3;
+"
+`;
+
+exports[`tshandler removes node 1`] = `
+"// Here's a comment
+var a = 1;
+
+var b = 2;
+
+
+
+var c = 3;
+"
+`;
+
+exports[`tshandler removes node fully 1`] = `
 "// Here's a comment
 var a = 1;
 
 var b = 2;
 
 var c = 3;
+"
+`;
+
+exports[`tshandler replaces node with text 1`] = `
+"// Here's a comment
+var a = 'test';
+
+var b = 'test';
+
+var c = 'test';
 
 console.log(a);
 

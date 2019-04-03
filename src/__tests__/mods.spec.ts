@@ -15,10 +15,10 @@ describe('typescript mods', () => {
   });
 
   it('replaces a single prop name in jsx', () => {
-    testWithFixture('renameJsxProp.tsx', renameJsxProp('App', 'hello', 'world'));
+    testWithFixture('renameJsxProp.tsx', renameJsxProp('App', 'hello', 'moddedProp'));
   });
 
   it('replaces a single prop value in jsx', () => {
-    testWithFixture('replaceJsxPropValue.tsx', replaceJsxPropValue('App', 'hello', 'world'));
+    testWithFixture('replaceJsxPropValue.tsx', replaceJsxPropValue('App', 'hello', '"modded"'));
   });
 });

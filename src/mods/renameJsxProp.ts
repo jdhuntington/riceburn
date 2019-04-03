@@ -7,7 +7,7 @@ export function renameJsxProp(tagName: string, propFrom: string, propTo: string)
       if (node.tagName.getText() === tagName && node.attributes && node.attributes.properties) {
         for (let prop of node.attributes.properties) {
           if (ts.isJsxAttribute(prop) && prop && prop.name && prop.name.getText() === propFrom && prop.initializer) {
-            return modder.replace(prop.initializer, propTo);
+            return modder.replace(prop.name, propTo);
           }
         }
       }

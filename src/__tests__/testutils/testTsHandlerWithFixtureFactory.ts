@@ -8,7 +8,10 @@ export function testTsHandlerWithFixtureFactory(fixturesPath: string) {
   return function(fixtureName: string, test: Visitor) {
     const fixture = path.join(fixturesPath, fixtureName);
     tsHandler([fixture], test);
+
+    const newContent = fs.readFileSync(fixture).toString();
     mockfs.restore();
-    expect(fs.readFileSync(fixture).toString()).toMatchSnapshot();
+
+    expect(newContent).toMatchSnapshot();
   };
 }

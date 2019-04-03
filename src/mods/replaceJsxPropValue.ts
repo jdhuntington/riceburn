@@ -6,8 +6,8 @@ export function replaceJsxPropValue(tagName: string, propName: string, value: st
     if (ts.isJsxOpeningLikeElement(node)) {
       if (node.tagName.getText() === tagName && node.attributes && node.attributes.properties) {
         for (let prop of node.attributes.properties) {
-          if (prop && prop.name && prop.name.getText() === propName) {
-            debugger;
+          if (ts.isJsxAttribute(prop) && prop && prop.name && prop.name.getText() === propName && prop.initializer) {
+            return modder.replace(prop.initializer, value);
           }
         }
       }

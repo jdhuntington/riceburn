@@ -9,7 +9,7 @@ export interface Modder {
 }
 
 export interface Visitor {
-  (node: ts.Node, modder: Modder): TypescriptMod | undefined;
+  (node: ts.Node, modder: Modder): TypescriptMod | TypescriptMod[] | IterableIterator<TypescriptMod> | undefined | void;
 }
 
 export interface TypescriptMod {

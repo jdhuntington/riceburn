@@ -9,6 +9,10 @@ function getSourceFile(file: string, content: string) {
   return ts.createSourceFile(normalizedFile, content, ts.ScriptTarget.ES5, true);
 }
 
+function isIteratorIterable(item: any): item is IterableIterator<TypescriptMod> {
+  return typeof item[Symbol.iterator] === 'function' && typeof item.next === 'function' && typeof item.throw === 'function';
+}
+
 export function _applyMods(content: string, mods: TypescriptMod[]) {
   let index = 0;
   let newContent: string[] = [];
@@ -42,12 +46,20 @@ export function _sortMods(mods: TypescriptMod[]) {
 }
 
 export function _visitAndCollectMods(sourceFile: ts.SourceFile, visitor: Visitor) {
-  const mods: TypescriptMod[] = [];
+  let mods: TypescriptMod[] = [];
 
   const visitorWrapper = (node: ts.Node) => {
     const mod = visitor(node, modder);
     if (mod) {
-      mods.push(mod);
+      if (isIteratorIterable(mod)) {
+        for (const item of mod) {
+          mods.push(item);
+        }
+      } else if (Array.isArray(mod)) {
+        mods = [...mods, ...mod];
+      } else {
+        mods.push(mod);
+      }
     }
     node.forEachChild(visitorWrapper);
   };
