@@ -21,10 +21,10 @@ export function jsonHandler<T = any>(matches: string[], options: ModOptions, cb:
       newJson = cb(json);
       outputString = JSON.stringify(newJson, null, spaceIndents);
 
-      if (outputString !== inputString && options.dryRun) {
-        results.push({ fileName: match, state: 'would-be-modified' });
-      } else if (outputString !== inputString) {
-        fs.writeFileSync(match, outputString);
+      if (outputString !== inputString) {
+        if (!options.dryRun) {
+          fs.writeFileSync(match, outputString);
+        }
         results.push({ fileName: match, state: 'modified' });
       } else {
         results.push({ fileName: match, state: 'not-modified' });

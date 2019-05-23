@@ -12,10 +12,10 @@ export function textHandler<T = any>(matches: string[], options: ModOptions, cb:
     if (cb) {
       outputString = cb(inputString);
 
-      if (outputString !== inputString && options.dryRun) {
-        results.push({ fileName: match, state: 'would-be-modified' });
-      } else if (outputString !== inputString) {
-        fs.writeFileSync(match, outputString);
+      if (outputString !== inputString) {
+        if (!options.dryRun) {
+          fs.writeFileSync(match, outputString);
+        }
         results.push({ fileName: match, state: 'modified' });
       } else {
         results.push({ fileName: match, state: 'not-modified' });

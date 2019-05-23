@@ -88,10 +88,10 @@ export function tsHandler(matches: string[], options: ModOptions, visitor: Visit
       const mods = _visitAndCollectMods(sourceFile, visitor);
       newContent = _applyMods(sourceFile.getFullText(), _sortMods(mods));
 
-      if (newContent !== content && options.dryRun) {
-        results.push({ fileName: match, state: 'would-be-modified' });
-      } else if (newContent !== content) {
-        fs.writeFileSync(match, newContent);
+      if (newContent !== content) {
+        if (!options.dryRun) {
+          fs.writeFileSync(match, newContent);
+        }
         results.push({ fileName: match, state: 'modified' });
       } else {
         results.push({ fileName: match, state: 'not-modified' });

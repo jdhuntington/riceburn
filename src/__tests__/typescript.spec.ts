@@ -100,6 +100,6 @@ describe('tshandler', () => {
       }
     });
     expect(results[0].fileName).toEqual("src/__tests__/fixtures/typescript/dryRun.ts");
-    expect(results[0].state).toEqual("would-be-modified");
+    expect(results[0].state).toEqual("modified");
   });
 });
