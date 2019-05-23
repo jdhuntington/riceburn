@@ -2,7 +2,7 @@ import ts from 'typescript';
 import fs from 'fs';
 import path from 'path';
 import { modder } from './modder';
-import { TypescriptMod, Visitor } from '../interfaces';
+import { TypescriptMod, Visitor, ModResult, ModOptions } from '../interfaces';
 
 function getSourceFile(file: string, content: string) {
   const normalizedFile = path.normalize(file).replace(/\\/g, '/');
@@ -69,10 +69,11 @@ export function _visitAndCollectMods(sourceFile: ts.SourceFile, visitor: Visitor
   return mods;
 }
 
-export function tsHandler(matches: string[], visitor: Visitor) {
+export function tsHandler(matches: string[], options: ModOptions, visitor: Visitor): ModResult[] {
   let sourceFile: ts.SourceFile;
   let content: string;
   let newContent: string;
+  const results: ModResult[] = [];
 
   matches.forEach(match => {
     content = fs.readFileSync(match).toString();
@@ -87,9 +88,16 @@ export function tsHandler(matches: string[], visitor: Visitor) {
       const mods = _visitAndCollectMods(sourceFile, visitor);
       newContent = _applyMods(sourceFile.getFullText(), _sortMods(mods));
 
-      if (newContent !== content) {
+      if (newContent !== content && options.dryRun) {
+        results.push({ fileName: match, state: 'would-be-modified' });
+      } else if (newContent !== content) {
         fs.writeFileSync(match, newContent);
+        results.push({ fileName: match, state: 'modified' });
+      } else {
+        results.push({ fileName: match, state: 'not-modified' });
       }
     }
   });
+
+  return results;
 }

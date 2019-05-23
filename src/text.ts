@@ -1,8 +1,10 @@
 import fs from 'fs';
+import { ModResult, ModOptions } from './interfaces';
 
-export function textHandler<T = any>(matches: string[], cb: (text: string) => any) {
+export function textHandler<T = any>(matches: string[], options: ModOptions, cb: (text: string) => any): ModResult[] {
   let outputString: string;
   let inputString: string;
+  const results: ModResult[] = [];
 
   matches.forEach(match => {
     inputString = fs.readFileSync(match).toString();
@@ -10,9 +12,15 @@ export function textHandler<T = any>(matches: string[], cb: (text: string) => an
     if (cb) {
       outputString = cb(inputString);
 
-      if (outputString !== inputString) {
+      if (outputString !== inputString && options.dryRun) {
+        results.push({ fileName: match, state: 'would-be-modified' });
+      } else if (outputString !== inputString) {
         fs.writeFileSync(match, outputString);
+        results.push({ fileName: match, state: 'modified' });
+      } else {
+        results.push({ fileName: match, state: 'not-modified' });
       }
     }
   });
+  return results;
 }

@@ -15,7 +15,7 @@ describe('tshandler', () => {
   });
 
   it('replaces node with text', () => {
-    testWithFixture('variableDeclaration.ts', (node, modder) => {
+    testWithFixture('variableDeclaration.ts', {}, (node, modder) => {
       if (ts.isVariableDeclaration(node)) {
         return modder.replace(node, `${node.name.getText()} = 'test'`);
       }
@@ -23,7 +23,7 @@ describe('tshandler', () => {
   });
 
   it('prepends node with text', () => {
-    testWithFixture('prepend.ts', (node, modder) => {
+    testWithFixture('prepend.ts', {}, (node, modder) => {
       if (ts.isVariableDeclaration(node)) {
         return modder.prepend(node.parent, `console.log('prepended');\n`);
       }
@@ -31,7 +31,7 @@ describe('tshandler', () => {
   });
 
   it('appends node with text', () => {
-    testWithFixture('append.ts', (node, modder) => {
+    testWithFixture('append.ts', {}, (node, modder) => {
       if (ts.isVariableDeclaration(node)) {
         return modder.append(node.parent, `\nconsole.log('appended');`);
       }
@@ -39,7 +39,7 @@ describe('tshandler', () => {
   });
 
   it('removes node', () => {
-    testWithFixture('remove.ts', (node, modder) => {
+    testWithFixture('remove.ts', {}, (node, modder) => {
       if (ts.isExpressionStatement(node)) {
         return modder.remove(node);
       }
@@ -47,7 +47,7 @@ describe('tshandler', () => {
   });
 
   it('removes node fully', () => {
-    testWithFixture('removeFull.ts', (node, modder) => {
+    testWithFixture('removeFull.ts', {}, (node, modder) => {
       if (ts.isExpressionStatement(node)) {
         return modder.removeFull(node);
       }
@@ -55,7 +55,7 @@ describe('tshandler', () => {
   });
 
   it('mods multiple mods in a generator function', () => {
-    testWithFixture('iterable.ts', function*(node, modder) {
+    testWithFixture('iterable.ts', {}, function* (node, modder) {
       if (ts.isVariableDeclaration(node) && node.name.getText() === 'a') {
         yield modder.replace(node.name, 'aaaa');
       } else if (ts.isVariableDeclaration(node) && node.name.getText() === 'c') {
@@ -65,7 +65,7 @@ describe('tshandler', () => {
   });
 
   it('mods multiple mods if results in array', () => {
-    testWithFixture('array.ts', (node, modder) => {
+    testWithFixture('array.ts', {}, (node, modder) => {
       const mods: TypescriptMod[] = [];
 
       if (ts.isVariableDeclaration(node) && node.name.getText() === 'a') {
@@ -79,6 +79,27 @@ describe('tshandler', () => {
   });
 
   it('does not mod when nothing is returned', () => {
-    testWithFixture('nomod.ts', (node, modder) => {});
+    testWithFixture('nomod.ts', {}, (node, modder) => { });
+  });
+
+
+  it("returns list of files modified", () => {
+    const results = testWithFixture("variableDeclaration.ts", {}, (node, modder) => {
+      if (ts.isVariableDeclaration(node)) {
+        return modder.replace(node, `${node.name.getText()} = 'test'`);
+      }
+    });
+    expect(results[0].fileName).toEqual("src/__tests__/fixtures/typescript/variableDeclaration.ts");
+    expect(results[0].state).toEqual("modified");
+  });
+
+  it("does not modify files in dry-run mode", () => {
+    const results = testWithFixture("dryRun.ts", { dryRun: true }, (node, modder) => {
+      if (ts.isVariableDeclaration(node)) {
+        return modder.replace(node, `${node.name.getText()} = 'test'`);
+      }
+    });
+    expect(results[0].fileName).toEqual("src/__tests__/fixtures/typescript/dryRun.ts");
+    expect(results[0].state).toEqual("would-be-modified");
   });
 });
