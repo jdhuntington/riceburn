@@ -2,16 +2,17 @@ import mockfs from 'mock-fs';
 import path from 'path';
 import fs from 'fs';
 import { tsHandler } from '../../typescript';
-import { Visitor } from '../../interfaces';
+import { Visitor, ModResult, ModOptions } from '../../interfaces';
 
 export function testTsHandlerWithFixtureFactory(fixturesPath: string) {
-  return function(fixtureName: string, test: Visitor) {
+  return function (fixtureName: string, options: ModOptions, test: Visitor): ModResult[] {
     const fixture = path.join(fixturesPath, fixtureName);
-    tsHandler([fixture], test);
+    const result = tsHandler([fixture], options, test);
 
     const newContent = fs.readFileSync(fixture).toString();
     mockfs.restore();
 
     expect(newContent).toMatchSnapshot();
+    return result;
   };
 }

@@ -23,4 +23,14 @@ export interface ModHandlers<T> {
   asJson: (cb: (json: T) => T) => ModHandlers<T>;
   asText: (cb: (text: string) => string) => ModHandlers<T>;
   asTypescript: (visitor: Visitor) => ModHandlers<T>;
+  files: ModResult[];
+}
+
+export interface ModOptions {
+  dryRun?: boolean;
+}
+
+export interface ModResult {
+  fileName: string;
+  state: 'not-modified' | 'would-be-modified' | 'modified';
 }
